@@ -16,8 +16,9 @@ class BookmarkListView(ListView):
             # user -> profile -> bookmark_list
             profile = Profile.objects.get(user=user)  # user -> profile
             bookmark_list = Bookmark.objects.filter(profile=profile)  # profile -> bookmark_list
-        else:  # 로그인 안하면, 북마크 보이지 말자
-            bookmark_list = Bookmark.objects.none()
+        else:  # 로그인 안하면,
+            # bookmark_list = Bookmark.objects.all()    #북마크 다 보여주자
+            bookmark_list = Bookmark.objects.none()  # 북마크 보이지 말자
         return bookmark_list
 
 
@@ -28,7 +29,7 @@ class BookmarkCreateView(CreateView):
     success_url = reverse_lazy('bookmark:list')
 
     def get_initial(self):
-        #user -> profile
+        # user -> profile
         user = self.request.user
         profile = Profile.objects.get(user=user)
         return {'profile': profile}
